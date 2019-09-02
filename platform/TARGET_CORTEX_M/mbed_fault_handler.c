@@ -70,8 +70,14 @@ void mbed_fault_handler(uint32_t fault_type, void *mbed_fault_context_in)
             faultStatus = MBED_ERROR_HARDFAULT_EXCEPTION;
             break;
     }
+
+// [hackerdom]
+#if TARGET_RELEASE
+    NVIC_SystemReset();
+#else
     mbed_error_printf("\n\nContext:");
     print_context_info();
+#endif
 
     mbed_error_printf("\n\n-- MbedOS Fault Handler --\n\n");
 
